@@ -14,9 +14,4 @@ public class ItemMaxStackSizeMixin {
     private void onGetMaxStackSize(CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(MaxIntConfig.itemMaxStackSize());
     }
-
-    @Inject(method = "getMaxStackSize(Lnet/minecraft/world/item/ItemStack;)I", at = @At("RETURN"), cancellable = true, remap = false, require = 0)
-    private void onGetMaxStackSizeForge(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(MaxIntConfig.itemMaxStackSize());
-    }
 }

@@ -20,4 +20,9 @@ public class ItemStackMixin {
             last.putInt("lvlInt", level);
         }
     }
+
+    @Inject(method = "getMaxStackSize()I", at = @At("RETURN"), cancellable = true)
+    private void onGetMaxStackSize(org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Integer> cir) {
+        cir.setReturnValue(com.ecrea.maxint2147483647.config.MaxIntConfig.itemMaxStackSize());
+    }
 }

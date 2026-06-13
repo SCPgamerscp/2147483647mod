@@ -16,8 +16,4 @@ public class SlotMixin {
         cir.setReturnValue(MaxIntConfig.itemMaxStackSize());
     }
 
-    @Inject(method = "getMaxStackSize(Lnet/minecraft/world/item/ItemStack;)I", at = @At("RETURN"), cancellable = true)
-    private void onGetMaxStackSizeStack(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(MaxIntConfig.itemMaxStackSize());
-    }
 }
