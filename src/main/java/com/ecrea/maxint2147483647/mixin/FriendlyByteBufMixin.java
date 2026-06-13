@@ -16,12 +16,8 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(FriendlyByteBuf.class)
 public abstract class FriendlyByteBufMixin {
 
-    /**
-     * @author Antigravity
-     * @reason アイテム個数を Byte ではなく VarInt として送る
-     */
-    @Overwrite
-    public FriendlyByteBuf writeItem(ItemStack p_130055_) {
+    @org.spongepowered.asm.mixin.injection.Inject(method = "writeItem", at = @org.spongepowered.asm.mixin.injection.At("HEAD"), cancellable = true)
+    public void onWriteItem(ItemStack p_130055_, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<FriendlyByteBuf> cir) {
         FriendlyByteBuf buf = (FriendlyByteBuf) (Object) this;
         if (p_130055_.isEmpty()) {
             buf.writeBoolean(false);
@@ -30,7 +26,6 @@ public abstract class FriendlyByteBufMixin {
             Item item = p_130055_.getItem();
             buf.writeId(BuiltInRegistries.ITEM, item);
             
-            // バニラ: buf.writeByte(p_130055_.getCount());
             buf.writeVarInt(p_130055_.getCount());
             
             CompoundTag compoundtag = null;
@@ -40,27 +35,22 @@ public abstract class FriendlyByteBufMixin {
 
             buf.writeNbt(compoundtag);
         }
-        return buf;
+        cir.setReturnValue(buf);
     }
 
-    /**
-     * @author Antigravity
-     * @reason アイテム個数を Byte ではなく VarInt として読み取る
-     */
-    @Overwrite
-    public ItemStack readItem() {
+    @org.spongepowered.asm.mixin.injection.Inject(method = "readItem", at = @org.spongepowered.asm.mixin.injection.At("HEAD"), cancellable = true)
+    public void onReadItem(org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<ItemStack> cir) {
         FriendlyByteBuf buf = (FriendlyByteBuf) (Object) this;
         if (!buf.readBoolean()) {
-            return ItemStack.EMPTY;
+            cir.setReturnValue(ItemStack.EMPTY);
         } else {
             Item item = buf.readById(BuiltInRegistries.ITEM);
             
-            // バニラ: int i = buf.readByte();
             int count = buf.readVarInt();
             
             ItemStack itemstack = new ItemStack(item, count);
             itemstack.setTag(buf.readNbt());
-            return itemstack;
+            cir.setReturnValue(itemstack);
         }
     }
 }

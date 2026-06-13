@@ -65,9 +65,10 @@ public class AmplifyingBrewingRecipe implements IBrewingRecipe {
 
         ItemStack output = new ItemStack(Items.POTION);
 
-        // "Potion" タグがないとMinecraft 1.20.1ではデータが壊れたりデフォルトのエフェクトに
-        // 置き換えられたりするバグが発生するため、無害な "minecraft:water" にしておく。
-        output.getOrCreateTag().putString("Potion", "minecraft:water");
+        // ─── バニラの Potion タグを専用のベースポーションに設定 ───
+        // minecraft:water だと他Modに「バニラの水瓶が作られた」と誤認されてNBTが消されるため、
+        // 独自のポーション(maxint2147483647:amplified)に偽装して他Modからの干渉を防ぐ。
+        output.getOrCreateTag().putString("Potion", "maxint2147483647:amplified");
 
         // ─── カスタムエフェクトのみ設定 ───
         PotionUtils.setCustomEffects(output, result);
