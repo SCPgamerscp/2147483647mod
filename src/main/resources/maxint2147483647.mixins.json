@@ -15,7 +15,11 @@
     "ItemStackMixin",
     "ContainerMixin",
     "SlotMixin",
-    "FriendlyByteBufMixin"
+    "FriendlyByteBufMixin",
+    "BaseContainerBlockEntityMixin",
+    "SlotItemHandlerMixin",
+    "PotionUtilsMixin",
+    "VanillaBrewingRecipeMixin"
   ],
   "client": [],
   "injectors": {
