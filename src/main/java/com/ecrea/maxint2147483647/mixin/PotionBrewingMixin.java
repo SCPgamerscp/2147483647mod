@@ -38,8 +38,8 @@ public class PotionBrewingMixin {
             // 新しいポーションアイテムを作成
             ItemStack output = new ItemStack(potion.getItem());
             
-            // 他Modからのバニラレシピ誤認を防ぐため、"minecraft:water" ではなく専用の不可視ダミーベースにする
-            output.getOrCreateTag().putString("Potion", "maxint2147483647:amplified");
+            // Potionタグを完全に削除し、純粋なカスタムポーションとして出力する
+            output.getOrCreateTag().remove("Potion");
 
             List<MobEffectInstance> newEffects = new ArrayList<>();
             int maxAmp = 0;
