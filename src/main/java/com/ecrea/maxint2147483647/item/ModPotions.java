@@ -10,5 +10,5 @@ public class ModPotions {
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MaxIntMod.MODID);
 
     // 内部データ用のダミーポーション。他Modが「バニラの水瓶」だと誤認してカスタムNBTを消すのを防ぐための専用ベース
-    public static final RegistryObject<Potion> BASE = POTIONS.register("base", () -> new Potion("base"));
+    public static final RegistryObject<Potion> BASE = POTIONS.register("amplified", () -> new Potion("amplified"));
 }

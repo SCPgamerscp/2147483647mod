@@ -39,7 +39,7 @@ public class PotionBrewingMixin {
             ItemStack output = new ItemStack(potion.getItem());
             
             // 他Modからのバニラレシピ誤認を防ぐため、"minecraft:water" ではなく専用の不可視ダミーベースにする
-            output.getOrCreateTag().putString("Potion", "maxint2147483647:base");
+            output.getOrCreateTag().putString("Potion", "maxint2147483647:amplified");
 
             List<MobEffectInstance> newEffects = new ArrayList<>();
             int maxAmp = 0;
