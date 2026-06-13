@@ -11,7 +11,8 @@
     "AnvilMenuMixin",
     "EffectCommandsMixin",
     "GiveCommandMixin",
-    "EnchantmentHelperMixin"
+    "EnchantmentHelperMixin",
+    "ItemStackMixin"
   ],
   "client": [],
   "injectors": {
