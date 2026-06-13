@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All rights reserved"
+issueTrackerURL="https://github.com/SCPgamerscp/2147483647mod/issues"
+showAsResourcePack=false
+
+[[mods]]
+modId="maxint2147483647"
+version="1.0"
+displayName="2147483647mod"
+displayURL="https://github.com/SCPgamerscp/2147483647mod"
+credits="Thanks for this mod."
+authors="SCPgamerscp"
+description='''
+Item stack size, enchantment level, and potion effect amplifier
+can be set up to 2147483647 (Integer.MAX_VALUE).
+'''
+dependencies.maxint2147483647=[
+    {modId="forge", mandatory=true, versionRange="[47,)", ordering="NONE", side="BOTH"},
+    {modId="minecraft", mandatory=true, versionRange="[1.20.1,1.21)", ordering="NONE", side="BOTH"}
+]
+
+[[mixins]]
+config = "maxint2147483647.mixins.json"

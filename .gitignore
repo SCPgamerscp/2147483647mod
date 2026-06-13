@@ -1,0 +1,32 @@
+# gradle
+.gradle/
+build/
+out/
+
+# eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+.vscode/
+
+# Minecraft run directories
+run/
+run-data/
+
+# logs / build outputs
+*.log
+build_*.txt
+*.refmap.json
+
+# misc
+*.tmp
+setup*.ps1
