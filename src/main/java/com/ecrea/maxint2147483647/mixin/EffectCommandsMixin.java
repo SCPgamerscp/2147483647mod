@@ -14,11 +14,15 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  * EffectCommands#register 内には "amplifier"(0~255) と
  * "seconds"(0~1000000) の2つの IntegerArgumentType.integer 呼び出しが
  * あるため、max==255 の呼び出しのみを置き換える。
+ *
+ * 本Mixinが対象を見つけられない場合でも、mixins.json の
+ * defaultRequire=0 設定によりゲームはクラッシュせず、
+ * 単にこの機能のみ無効になる。
  */
 @Mixin(EffectCommands.class)
 public class EffectCommandsMixin {
 
-    @Redirect(method = "register", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/arguments/IntegerArgumentType;integer(II)Lcom/mojang/brigadier/arguments/IntegerArgumentType;"))
+    @Redirect(method = "register", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/arguments/IntegerArgumentType;integer(II)Lcom/mojang/brigadier/arguments/IntegerArgumentType;"), require = 0)
     private static IntegerArgumentType redirectIntegerArgument(int min, int max) {
         if (max == 255) {
             return IntegerArgumentType.integer(min, MaxIntConfig.effectMaxAmplifier());

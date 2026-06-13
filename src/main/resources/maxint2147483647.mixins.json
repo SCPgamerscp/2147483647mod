@@ -11,10 +11,8 @@
     "AnvilMenuMixin",
     "EffectCommandsMixin"
   ],
-  "client": [
-    "PotionTooltipMixin"
-  ],
+  "client": [],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 0
   }
 }
