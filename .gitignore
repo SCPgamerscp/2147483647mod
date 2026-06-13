@@ -32,3 +32,5 @@ build_*.txt
 setup*.ps1
 
 *.ps1
+
+stop_out.txt
