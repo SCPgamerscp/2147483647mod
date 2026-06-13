@@ -19,7 +19,7 @@
     "BaseContainerBlockEntityMixin",
     "SlotItemHandlerMixin",
     "PotionUtilsMixin",
-    "VanillaBrewingRecipeMixin"
+    "PotionBrewingMixin"
   ],
   "client": [],
   "injectors": {

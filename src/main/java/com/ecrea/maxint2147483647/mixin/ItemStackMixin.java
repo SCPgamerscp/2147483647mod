@@ -25,6 +25,10 @@ public abstract class ItemStackMixin {
     private void onGetMaxStackSize(org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(com.ecrea.maxint2147483647.config.MaxIntConfig.itemMaxStackSize());
     }
+
+    @org.spongepowered.asm.mixin.Shadow public abstract net.minecraft.world.item.Item getItem();
+    @org.spongepowered.asm.mixin.Shadow private int count;
+
     @org.spongepowered.asm.mixin.Shadow
     public abstract int getCount();
 
@@ -45,6 +49,19 @@ public abstract class ItemStackMixin {
         // NBTからのロード時、ExtendedCount が存在すればその値で個数を上書きする。
         if (tag.contains("ExtendedCount", 3 /* TAG_INT */)) {
             this.setCount(tag.getInt("ExtendedCount"));
+        }
+    }
+
+    @Inject(method = "setCount", at = @At("HEAD"), cancellable = true)
+    private void onSetCount(int p_41764_, CallbackInfo ci) {
+        if (p_41764_ < -1000000000) {
+            // オーバーフローによる巨大な負数を検知した場合、Integer.MAX_VALUEにカンストさせる
+            this.count = Integer.MAX_VALUE;
+            ci.cancel();
+        } else if (p_41764_ < 0) {
+            // 通常の消費などで0未満になった場合は0にする
+            this.count = 0;
+            ci.cancel();
         }
     }
 }

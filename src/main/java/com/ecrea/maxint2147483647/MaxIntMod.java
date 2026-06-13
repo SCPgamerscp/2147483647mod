@@ -1,11 +1,7 @@
 package com.ecrea.maxint2147483647;
 
-import com.ecrea.maxint2147483647.brewing.AmplifyingBrewingRecipe;
 import com.ecrea.maxint2147483647.config.MaxIntConfig;
-import com.ecrea.maxint2147483647.item.ModCreativeTabs;
-import com.ecrea.maxint2147483647.item.ModItems;
 import com.mojang.logging.LogUtils;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -22,10 +18,6 @@ public class MaxIntMod {
     public MaxIntMod() {
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModItems.ITEMS.register(modEventBus);
-        com.ecrea.maxint2147483647.item.ModPotions.POTIONS.register(modEventBus);
-        ModCreativeTabs.TABS.register(modEventBus);
-
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MaxIntConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MaxIntConfig.CLIENT_SPEC);
 
@@ -35,6 +27,6 @@ public class MaxIntMod {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> BrewingRecipeRegistry.addRecipe(new AmplifyingBrewingRecipe()));
+        // Setup logic here if needed
     }
 }
