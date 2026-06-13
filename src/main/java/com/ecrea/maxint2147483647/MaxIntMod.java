@@ -19,7 +19,8 @@ public class MaxIntMod {
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         com.ecrea.maxint2147483647.item.ModPotions.POTIONS.register(modEventBus);
-
+        com.ecrea.maxint2147483647.item.ModItems.ITEMS.register(modEventBus);
+        com.ecrea.maxint2147483647.item.ModCreativeTabs.TABS.register(modEventBus);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MaxIntConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MaxIntConfig.CLIENT_SPEC);
 
@@ -29,6 +30,8 @@ public class MaxIntMod {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        // Setup logic here if needed
+        event.enqueueWork(() -> {
+            net.minecraftforge.common.brewing.BrewingRecipeRegistry.addRecipe(new com.ecrea.maxint2147483647.brewing.AmplifyingBrewingRecipe());
+        });
     }
 }
