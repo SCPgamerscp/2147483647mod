@@ -27,7 +27,8 @@ public class AmplifyingBrewingRecipe implements IBrewingRecipe {
 
     @Override
     public boolean isInput(ItemStack input) {
-        if (input.getItem() != Items.POTION) {
+        net.minecraft.world.item.Item item = input.getItem();
+        if (item != Items.POTION && item != Items.SPLASH_POTION && item != Items.LINGERING_POTION && item != Items.TIPPED_ARROW) {
             return false;
         }
         return !PotionUtils.getMobEffects(input).isEmpty();
@@ -67,7 +68,7 @@ public class AmplifyingBrewingRecipe implements IBrewingRecipe {
             ));
         }
 
-        ItemStack output = new ItemStack(Items.POTION);
+        ItemStack output = new ItemStack(input.getItem(), input.getCount());
 
         // ─── バニラの Potion タグを専用のベースポーションに設定 ───
         // minecraft:water だと他Modに「バニラの水瓶が作られた」と誤認されてNBTが消されるため、
