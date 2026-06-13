@@ -9,7 +9,9 @@
     "MobEffectInstanceNBTMixin",
     "EnchantCommandMixin",
     "AnvilMenuMixin",
-    "EffectCommandsMixin"
+    "EffectCommandsMixin",
+    "GiveCommandMixin",
+    "EnchantmentHelperMixin"
   ],
   "client": [],
   "injectors": {

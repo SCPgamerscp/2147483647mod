@@ -2,6 +2,8 @@ package com.ecrea.maxint2147483647.brewing;
 
 import com.ecrea.maxint2147483647.config.MaxIntConfig;
 import com.ecrea.maxint2147483647.item.ModItems;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -16,6 +18,10 @@ import java.util.List;
  * ポーションに含まれる全ての効果のamplifier(増幅値)を+1して
  * 再醸造できるレシピ。何度も繰り返すことで増幅値を無制限に
  * 増やすことができる。
+ *
+ * 出力はバニラのPotionタグを持たない純粋なカスタムポーションとなり、
+ * 元のポーション効果との競合(再生→暗視に変わるなど)を防ぐ。
+ * ポーション名は効果に基づいて自動的に生成される。
  */
 public class AmplifyingBrewingRecipe implements IBrewingRecipe {
 
@@ -58,7 +64,58 @@ public class AmplifyingBrewingRecipe implements IBrewingRecipe {
         }
 
         ItemStack output = new ItemStack(Items.POTION);
+
+        // ─── バニラの Potion タグを明示的に除去 ───
+        // バニラの PotionUtils.getMobEffects() は "Potion" タグと
+        // "CustomPotionEffects" タグの両方からエフェクトを取得してマージする。
+        // "Potion" タグが残っていると、元のポーション効果と増幅後の効果が
+        // 混在し、バニラの内部処理で別のポーションに変わってしまう問題がある。
+        output.getOrCreateTag().remove("Potion");
+
+        // ─── カスタムエフェクトのみ設定 ───
         PotionUtils.setCustomEffects(output, result);
+
+        // ─── ポーション色を元のポーションに合わせて設定 ───
+        output.getOrCreateTag().putInt("CustomPotionColor", PotionUtils.getColor(input));
+
+        // ─── カスタム名を設定 (例: "再生 III", "力 V + 耐性 V") ───
+        output.setHoverName(buildPotionName(result));
+
         return output;
+    }
+
+    /**
+     * ポーション効果から表示名を生成する。
+     * 単一効果: "再生 III"
+     * 複数効果: "再生 III + 力 V"
+     *
+     * レベルは 1〜10 はローマ数字 (Minecraftの翻訳キー使用)、
+     * 11以上はアラビア数字で表示する。
+     */
+    private Component buildPotionName(List<MobEffectInstance> effects) {
+        if (effects.isEmpty()) {
+            return Component.translatable("item.minecraft.potion");
+        }
+
+        MutableComponent name = Component.empty();
+        for (int i = 0; i < effects.size(); i++) {
+            if (i > 0) {
+                name.append(" + ");
+            }
+            MobEffectInstance effect = effects.get(i);
+            name.append(effect.getEffect().getDisplayName().copy());
+
+            int level = effect.getAmplifier() + 1;
+            if (level > 1) {
+                name.append(" ");
+                if (level <= 10) {
+                    name.append(Component.translatable("enchantment.level." + level));
+                } else {
+                    name.append(Component.literal(String.valueOf(level)));
+                }
+            }
+        }
+
+        return name;
     }
 }
