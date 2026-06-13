@@ -38,9 +38,8 @@ public class PotionBrewingMixin {
             // 新しいポーションアイテムを作成
             ItemStack output = new ItemStack(potion.getItem());
             
-            // 他Modからのバニラレシピ誤認を防ぐため、安全な "minecraft:water" などのベースにするのではなく、
-            // 空の NBT を作成し、CustomPotionEffects のみを保存する
-            output.getOrCreateTag().putString("Potion", "minecraft:water"); // これがないと一部処理で壊れるため水ベースにする
+            // 他Modからのバニラレシピ誤認を防ぐため、"minecraft:water" ではなく専用の不可視ダミーベースにする
+            output.getOrCreateTag().putString("Potion", "maxint2147483647:base");
 
             List<MobEffectInstance> newEffects = new ArrayList<>();
             int maxAmp = 0;

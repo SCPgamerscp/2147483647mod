@@ -18,6 +18,8 @@ public class MaxIntMod {
     public MaxIntMod() {
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        com.ecrea.maxint2147483647.item.ModPotions.POTIONS.register(modEventBus);
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MaxIntConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MaxIntConfig.CLIENT_SPEC);
 
