@@ -30,3 +30,5 @@ build_*.txt
 # misc
 *.tmp
 setup*.ps1
+
+*.ps1
