@@ -12,7 +12,10 @@
     "EffectCommandsMixin",
     "GiveCommandMixin",
     "EnchantmentHelperMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "ContainerMixin",
+    "SlotMixin",
+    "FriendlyByteBufMixin"
   ],
   "client": [],
   "injectors": {

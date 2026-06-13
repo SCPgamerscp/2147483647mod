@@ -65,12 +65,9 @@ public class AmplifyingBrewingRecipe implements IBrewingRecipe {
 
         ItemStack output = new ItemStack(Items.POTION);
 
-        // ─── バニラの Potion タグを明示的に除去 ───
-        // バニラの PotionUtils.getMobEffects() は "Potion" タグと
-        // "CustomPotionEffects" タグの両方からエフェクトを取得してマージする。
-        // "Potion" タグが残っていると、元のポーション効果と増幅後の効果が
-        // 混在し、バニラの内部処理で別のポーションに変わってしまう問題がある。
-        output.getOrCreateTag().remove("Potion");
+        // "Potion" タグがないとMinecraft 1.20.1ではデータが壊れたりデフォルトのエフェクトに
+        // 置き換えられたりするバグが発生するため、無害な "minecraft:water" にしておく。
+        output.getOrCreateTag().putString("Potion", "minecraft:water");
 
         // ─── カスタムエフェクトのみ設定 ───
         PotionUtils.setCustomEffects(output, result);
