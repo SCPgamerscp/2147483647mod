@@ -18,7 +18,8 @@
     "FriendlyByteBufMixin",
     "BaseContainerBlockEntityMixin",
     "SlotItemHandlerMixin",
-    "PotionUtilsMixin"
+    "PotionUtilsMixin",
+    "ServerGamePacketListenerImplMixin"
   ],
   "client": [],
   "injectors": {
